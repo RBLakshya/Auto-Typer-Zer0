@@ -1,5 +1,7 @@
 **AutoTyper Zer0 - V1.7**  
 
+Official release on: November 28th, 2024
+
 An all-purpose Auto Typer built for convenience and efficiency. Designed to streamline text and code typing with advanced features for coders and typists alike.
 
 ---
