@@ -1,7 +1,0 @@
-#!/bin/bash
-
-osascript -e 'display dialog "Installation complete! Please disable the following setting for optimal performance: \n\nKeyboard > Input Sources > Add Full Stop with Double Space (Toggle Off)." buttons {"OK"} default button "OK" with title "AutoTyperZer0"'
-
-open "x-apple.systempreferences:com.apple.preference.keyboard"
-
-exit 0
