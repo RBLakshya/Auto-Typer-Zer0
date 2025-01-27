@@ -8,7 +8,6 @@ __pycache__/
 <<<<<<< HEAD
 # Build artifacts
 *.zip
-*.pkg
 =======
 # C extensions
 *.so
