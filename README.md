@@ -1,6 +1,6 @@
-**AutoTyper Zer0 - V1.0**  
+**AutoTyper Zer0 - V1.1**  
 
-**Date: 3rd January, 2024**
+**Date: 29th January, 2024**
 
 ---
 
@@ -10,10 +10,17 @@
   - Remove **comments** from the code with one click.  
   - Fix indentation issues for cleaner code presentation.
   - Special Python Auto Typing method built to ensure the typing result is always perfect.
-- **Super Speed Mode**: Type up to 100 lines of text or code in under 10 seconds. (The Mac version may be slightly slower at the moment)
+- **Super Speed Mode**: Type up to 100 lines of text or code in under 10 seconds with super fast mode. The Speed may cause lag on low-end systems, depending on the active tasks.
+- **Always on top**: A toggle that allows the autotyper to retain top window position for those emergency stops.
 - **Customizable Typing Speed**: Adjust typing speed and delay.  
 - **Copy/Clear Text**: Effortlessly manage text fields.  
-- **Dark Theme UI**: Aesthetic and comfortable interface for prolonged use.  
+- **Dark Theme UI**: Aesthetic and comfortable interface for prolonged use.
+
+
+## 1.1 Patch Notes
+- Optimised the window size to be more compact on Windows Devices.
+- Fixed the error where Windows version failed to do line breaks.
+- Optimised the Installer to offer Python 13.5 installation option. Versions older than Python 12 may have effect on the UI.
 
 
 ## Coming Soon!
