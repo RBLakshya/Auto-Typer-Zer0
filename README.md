@@ -20,7 +20,7 @@
 ## 1.1 Patch Notes
 - Optimised the window size to be more compact on Windows Devices.
 - Fixed the error where Windows version failed to do line breaks.
-- Optimised the Installer to offer Python 13.5 installation option. Versions older than Python 12 may have effect on the UI.
+- Optimised the Installer to offer Python 3.13.5 installation option. Versions older than Python 12 may have effect on the UI.
 
 
 ## Coming Soon!
