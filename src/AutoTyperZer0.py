@@ -155,7 +155,7 @@ def main(page: ft.Page):
                 )
             )
 
-            settings_window.content = ft.Column(content_widgets, spacing=10, scroll="auto")  # Add scroll here
+            settings_window.content = ft.Column(content_widgets, spacing=10, scroll="auto")
             page.update()
 
         settings_window = ft.AlertDialog(
