@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+
+# This is not the current version code, this is just the current reference. The main releases will be published after this tool is reviewed in my project.
 import flet as ft
 import keyboard
 import time
@@ -6,9 +8,13 @@ import threading
 import subprocess
 import sys
 import re
+import requests
+from functools import partial
 
-APP_VERSION = "v1.0 Beta 2"
-
+# Application version and OS
+APP_VERSION = "v0.8" 
+OS = "Windows"
+#OS = "macOS"
 
 def auto_typer(text, typing_speed, super_fast):
     if super_fast:
@@ -18,19 +24,146 @@ def auto_typer(text, typing_speed, super_fast):
             keyboard.write(char)
             time.sleep(typing_speed)
 
+def check_for_updates():
+    try:
+        url = "https://raw.githubusercontent.com/RBLakshya/Auto-Typer-Zer0/main/README.md"
+        response = requests.get(url, timeout=5)
+        if response.status_code == 200:
+            print("Fetched README file successfully.")
+            
+            # Extract the version from the README file
+            match = re.search(r"AutoTyper Zer0 - V?(\d+\.\d+(\.\d+)?)", response.text, re.IGNORECASE)
+            if match:
+                latest_version = match.group(1).strip()  # Extract and clean the latest version
+                current_version = APP_VERSION.lstrip("Vv").strip()
+
+                print(f"Current version: {current_version}, Latest version: {latest_version}")
+
+                # Compare versions
+                try:
+                    latest_version_tuple = tuple(map(int, latest_version.split('.')))
+                    current_version_tuple = tuple(map(int, current_version.split('.')))
+                except ValueError as version_error:
+                    return f"Error parsing version numbers: {version_error}"
+
+                if latest_version_tuple > current_version_tuple:
+                    return f"Update available: V{latest_version}. Get the latest update at GitHub."
+                else:
+                    return "You are using the latest version."
+            else:
+                return "Could not find version information in the README file."
+        else:
+            return f"Failed to check for updates. HTTP Status Code: {response.status_code}"
+    except Exception as e:
+        return f"Unable to connect to the update server. Error: {e}"
+
+print(check_for_updates())
+
+
 def main(page: ft.Page):
-    page.window_width = 500
-    page.window_height = 635
+
+    if OS == "macOS":
+        page.window_width = 500
+        page.window_height = 635
+    elif OS == "Windows":
+        page.window_width = 520
+        page.window_height = 665
+
     page.window_resizable = False
-    page.title = "Auto Typer Zer0"
+    page.window_maximizable = False
+    page.title = f"Auto Typer Zer0 {APP_VERSION} - {OS}"
+    page.window_icon = "AT0Icon.ico"
     page.padding = 10
     page.bgcolor = "#1e1e1e"
     page.theme = ft.Theme(font_family="Consolas")
 
+    # Settings window
+    expanded_states = [False] * 5
+
     def open_settings(e):
+        update_status = check_for_updates()
+
+        # Tips and Updates
+        sections = [
+            {
+                "group_title": "Update Features",
+                "items": [
+                    {"title": "Release log", "details": "Official Release!\n - Super Speed mode with zero delay\n - Typing modes for Codeing and Codetantra\n - 'Remove Comments' and 'Remove Indentation' added to the code Auto Typing modes."},
+                ],
+            },
+            {
+                "group_title": "Tips",
+                "items": [
+                    {"title": "Codetantra", "details": "Select the coding language required for Codetantra before starting. Click on 'Remove comments' and 'Remove Indentation' once to ensure it works correctly"},
+                    {"title": "Random '.' while typing on MacOS", "details": "To Resolve this issue, Open settings, Kryboard>Advanced, and disable double space for full stop/period insertion."},
+                ],
+            },
+        ]
+
+        def toggle_visibility(index):
+            for i in range(len(expanded_states)):
+                expanded_states[i] = False
+            expanded_states[index] = True
+            rebuild_content()
+
+        def rebuild_content():
+            content_widgets = [
+                ft.Text(f"App Version: {APP_VERSION}", width=360, color="#339dfa", size=24),
+                ft.Text(update_status, width=360, color="{up_colour}"),
+            ]
+            section_index = 0
+            for group in sections:
+                content_widgets.append(ft.Text(group["group_title"], size=16, weight="bold", width=360))
+
+                for item in group["items"]:
+                    current_index = section_index
+                    content_widgets.append(
+                        ft.Column(
+                            [
+                                ft.Row(
+                                    [
+                                        ft.Text(item["title"], weight="bold", expand=True),
+                                        ft.IconButton(
+                                            icon=ft.icons.EXPAND_MORE if not expanded_states[current_index] else ft.icons.EXPAND_LESS,
+                                            on_click=lambda e, i=current_index: toggle_visibility(i),
+                                        ),
+                                    ],
+                                    alignment="spaceBetween",
+                                ),
+                                ft.Text(
+                                    item["details"],
+                                    visible=expanded_states[current_index],
+                                    color="#c1c1c1",
+                                    width=360,
+                                ),
+                            ],
+                            spacing=5,
+                        )
+                    )
+                    section_index += 1
+
+            content_widgets.append(
+                ft.Row(
+                    [
+                        ft.TextButton(
+                            "GitHub",
+                            on_click=lambda _: page.launch_url("https://github.com/RBLakshya/Auto-Typer-Zer0"),
+                            style=ft.ButtonStyle(color="#007bff"),
+                        )
+                    ],
+                    alignment="end",
+                )
+            )
+
+            settings_window.content = ft.Column(content_widgets, spacing=10, scroll="auto")  # Add scroll here
+            page.update()
+
         settings_window = ft.AlertDialog(
-            title=ft.Text("Settings"),
-            content=ft.Text(f"App Version: {APP_VERSION}"),
+            title=ft.Text("Menu"),
+            content=ft.Container(
+                content=ft.Column([], spacing=10),
+                width=400,
+            ),
             actions=[
                 ft.TextButton(
                     "Close",
@@ -38,10 +171,12 @@ def main(page: ft.Page):
                 )
             ],
         )
+
+        rebuild_content()
+
         page.dialog = settings_window
         settings_window.open = True
         page.update()
-
 
     # Start typing
     def on_start_click(e):
@@ -101,40 +236,44 @@ def main(page: ft.Page):
 
     # Layouts and UI elements
     header = ft.Text(
-        "@RBLakshya - AutoTyperZer0",
-        color="#ff79c6",
+        "    @RBLakshya - AutoTyperZer0",
+        font_family="Consolas",
+        color="#6200ff",
         size=18,
-        weight="bold",
+        weight="bold",  
         expand=True,
-        text_align="left",
+        #text_align="left",
     )
-    page.add(header)
+    #page.add(header)
 
     text_field = ft.TextField(
         multiline=True,
         expand=False,
         height=200,
-        width=480,
+        width=500,
         bgcolor="#282a36",
         color="#f8f8f2",
         border_radius=8,
         border_color="#6272a4",
         text_style=ft.TextStyle(font_family="Consolas"),
+        helper_text="Enter the text/code in one or multiple lines."
     )
 
     delay_field = ft.TextField(
-        label="Start Delay (seconds):",
+        #icon=ft.icons.TIMER_SHARP,
+        label="Start Delay:",
         value="5",
-        width=200,
-        bgcolor="#44475a",
+        width=150,
+        bgcolor="#9c8fdc",
         color="#f8f8f2",
-        border_radius=8,
+        border_radius=4,
     )
     speed_field = ft.TextField(
+        #icon=ft.icons.SPEED_SHARP,
         label="Typing Speed:",
         value="0.01",
-        width=200,
-        bgcolor="#44475a",
+        width=150,
+        bgcolor="#9c8fdc",
         color="#f8f8f2",
         border_radius=8,
     )
@@ -147,6 +286,7 @@ def main(page: ft.Page):
             ft.dropdown.Option("C/C++"),
         ],
         bgcolor="#44475a",
+        border_color="#c1bfc5",
         color="#f8f8f2",
         border_radius=8,
         on_change=update_ui_for_language,
@@ -155,19 +295,20 @@ def main(page: ft.Page):
     super_fast_check = ft.Checkbox(
         label="Super Fast Mode",
         value=False,
-        fill_color="#ff79c6",
-        check_color="#282a36",
+        fill_color="#81b2b7",
+        check_color="#6200ff",
     )
 
     remove_comments_button = ft.ElevatedButton(
-        text="Remove Comments", on_click=remove_comments, visible=False
+        text="Remove Comments", on_click=remove_comments, visible=False, width=190
     )
     remove_indent_button = ft.ElevatedButton(
-        text="Remove Indentation", on_click=remove_indentation, visible=False
+        text="Remove Indentation", on_click=remove_indentation, visible=False, width=190,
     )
 
     clear_button = ft.OutlinedButton(
         text="Clear Text",
+        width=150,
         on_click=lambda e: setattr(text_field, "value", ""),
         style=ft.ButtonStyle(
             color="#ff5555", shape=ft.RoundedRectangleBorder(radius=8)
@@ -175,29 +316,31 @@ def main(page: ft.Page):
     )
     copy_button = ft.OutlinedButton(
         text="Copy Text",
+        width=150,
         on_click=lambda e: page.set_clipboard(text_field.value),
         style=ft.ButtonStyle(
-            color="#50fa7b", shape=ft.RoundedRectangleBorder(radius=8)
+            color="#50defa", shape=ft.RoundedRectangleBorder(radius=8)
         ),
     )
     start_button = ft.ElevatedButton(
         text="Start Typing",
         on_click=on_start_click,
+        width=190,
         style=ft.ButtonStyle(
-            color="#f8f8f2", bgcolor="#50fa7b", shape=ft.RoundedRectangleBorder(radius=8)
+            color="#030303", bgcolor="#50fa7b", shape=ft.RoundedRectangleBorder(radius=8),
         ),
     )
     stop_button = ft.ElevatedButton(
         text="Stop Typing",
         on_click=lambda e: keyboard.unhook_all(),
+        width=190,
         style=ft.ButtonStyle(
-            color="#f8f8f2", bgcolor="#ff5555", shape=ft.RoundedRectangleBorder(radius=8)
+            color="#000000", bgcolor="#ff5555", shape=ft.RoundedRectangleBorder(radius=8)
         ),
     )
 
-    # Settings Icon
     settings_icon = ft.IconButton(
-        icon=ft.icons.SETTINGS,
+        icon=ft.icons.MENU,
         on_click=open_settings,
         tooltip="Settings",
         icon_color="#f8f8f2",
