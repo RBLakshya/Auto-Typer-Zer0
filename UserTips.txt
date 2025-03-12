@@ -1,4 +1,6 @@
 # This file is only for the Tips fetching Methods of the Auto Typer, it is currently up for beta testing.
-{"title": "Codetantra", "details": "Select the required coding language before starting. The auto typer will adjust indentation automatically."},
-{"title": "Random '.' while typing on macOS", "details": "To fix, open Settings → Keyboard → Advanced, and disable double space for full stop insertion."},
-{"title": "AutoTyper causing lag on browser", "details": "The AutoTyper can cause bursts of lag or freeze frames on lowerend devices, it is recommended to use a browser like Firefox, or Edge which can manage these mass inputs better."}
+[
+    {"title": "Codetantra", "details": "Select the required coding language before starting. The auto typer will adjust indentation automatically."},
+    {"title": "Random '.' while typing on macOS", "details": "To fix, open Settings → Keyboard → Advanced, and disable double space for full stop insertion."},
+    {"title": "AutoTyper causing lag on browser", "details": "The AutoTyper can cause bursts of lag or freeze frames on lower-end devices. It is recommended to use a browser like Firefox or Edge, which manage mass inputs better."}
+]
