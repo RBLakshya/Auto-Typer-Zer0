@@ -1,0 +1,15 @@
+# This File is only for the AutoTyper's Update checking method. It is only published for testing at the moment.
+Version 1.2
+Date: 16/3/2024
+
+New Features:
+
+ - Better Update Logging: Easier to know when updates are available.
+ - More User Tips: You can now recieve tips about the tool as its updated.
+ - Minified AOT Controller: Only keep the Start and Stop button always on top, while the main window stays hidden.
+ - Revamped UI: More Compact and can fit more information.
+
+Fixes and Optimisation:
+
+ - Removed accidental debug features left in.
+ - Optimised Windows app to launch quicker.
