@@ -1,6 +1,6 @@
-**AutoTyper Zer0 - V1.1**  
+**AutoTyper Zer0 - V1.2**  
 
-**Date: 29th January, 2024**
+**Date: 28th March, 2025**
 
 ---
 
@@ -17,10 +17,23 @@
 - **Dark Theme UI**: Aesthetic and comfortable interface for prolonged use.
 
 
-## 1.1 Patch Notes
-- Optimised the window size to be more compact on Windows Devices.
-- Fixed the error where Windows version failed to do line breaks.
-- Optimised the Installer to offer Python 3.13.5 installation option. Versions older than Python 12 may have effect on the UI.
+## 1.2 Patch Notes
+  Changes:
+  
+ - Better Update Logging: Easier to know when updates are available.
+ - More User Tips: You can now recieve tips about the tool as its updated.
+ - Revamped UI: More Compact and can fit more information.
+
+  Fixes and Optimisation:
+
+ - Removed accidental debug features left in.
+ - Optimised Windows app to launch quicker.
+ - Fixed UI refreshing Issues.
+ - Fixed Collapsable Text fields.
+ - Fixed Windows Installer for Desktop Shortcut checkbox.
+ - Updated Python Update method for installer.
+ - Many more!
+
 
 
 ## Coming Soon!
@@ -31,6 +44,5 @@
 
 ## Known Bugs
 - macOS Version opens with two icons in Dock, this will be fixed once the app is switched to swift.
-- Collapsible text fields don't minimize on click unless another is opened, this will be fixed in coming updates.
   
 ---
