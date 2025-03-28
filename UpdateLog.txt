@@ -6,10 +6,14 @@ New Features:
 
  - Better Update Logging: Easier to know when updates are available.
  - More User Tips: You can now recieve tips about the tool as its updated.
- - Minified AOT Controller: Only keep the Start and Stop button always on top, while the main window stays hidden.
  - Revamped UI: More Compact and can fit more information.
 
 Fixes and Optimisation:
 
  - Removed accidental debug features left in.
  - Optimised Windows app to launch quicker.
+ - Fixed UI refreshing Issues.
+ - Fixed Collapsable Text fields.
+ - Fixed Windows Installer for Desktop Shortcut checkbox.
+ - Updated Python Update method for installer.
+ - Many more!
