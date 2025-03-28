@@ -1,0 +1,11 @@
+#!/bin/bash
+# To fix the '.' typing issue on mac
+Choice=$(osascript -e 'display dialog "Installation complete! Please choose one of the following options:\n\n1. Change Setting: Open Keyboard > Input Sources > Add Full Stop with Double Space (Toggle Off).\n2. Already Set: If you have already disabled this setting." buttons {"Change Setting", "Already Set"} default button "Change Setting" with title "AutoTyperZer0"')
+
+if [[ "$Choice" == "button returned:Change Setting" ]]; then
+    # System Settings > Keyboard Preferences
+    open "x-apple.systempreferences:com.apple.preference.keyboard"
+else
+    echo "User confirmed the setting is already disabled."
+fi
+exit 0

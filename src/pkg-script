@@ -1,0 +1,6 @@
+#!/bin/bash
+
+pkgbuild --component AutoTyperZer0.app \
+         --install-location /Applications \
+         --scripts scripts \
+         AutoTyperZer0.pkg
