@@ -1,6 +1,6 @@
-# This File is only for the AutoTyper's Update checking method. It is only published for testing at the moment.
+# This File is only for the AutoTyper's Update checking method.
 Version 1.2
-Date: 16/3/2024
+Date: 28/3/2024
 
 New Features:
 
